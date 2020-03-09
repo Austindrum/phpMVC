@@ -58,6 +58,7 @@ class Users extends Controller
         unset($_SESSION['user_name']);
         unset($_SESSION['user_email']);
         flash('logout_success', 'You are Logout', 'alert alert-danger');
+        // session_destroy();
         redirect('users/login');
     }
     public function register(){

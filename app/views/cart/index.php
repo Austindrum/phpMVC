@@ -1,7 +1,9 @@
 <?php require_once APPROOT.'/views/inc/header.php' ?>
+<?php flash('item_has_been_add'); ?>
+<?php flash('add_item_success'); ?>
 <div class="row py-5">
     <?php foreach($data['items'] as $items): ?>
-    <form action="#" method="POST">
+    <form action="<?= URLROOT ?>carts/addItemTocart/<?= $items->id ?>" method="POST">
         <div class="card col m-1 border border-secondary" style="width: 17rem;height:500px">
             <input type="hidden" name="product_id" value="<?= $this->id ?>">
             <img src="<?= URLROOT.$items->image ?>" class="card-img-top" alt="...">
@@ -16,11 +18,10 @@
                         echo $items->content;
                     }?>
                 </p>
-                <button class="btn btn-warning text-white mx-auto" type="submit" name="addCart">Add To Cart</button>
+                <button class="btn btn-warning text-white mx-auto" type="submit" name="addItem">Add To Cart</button>
             </div>
         </div>
     </form>
     <?php endforeach; ?>
 </div>
-
 <?php require_once APPROOT.'/views/inc/footer.php' ?>

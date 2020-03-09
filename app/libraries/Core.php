@@ -4,7 +4,7 @@
 //URL FORMAT - /controller/method/params
 
 class Core{
-    protected $currentController = 'Cart';
+    protected $currentController = 'Carts';
     protected $currentMethod = 'index';
     protected $params = [];
 

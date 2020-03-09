@@ -30,10 +30,10 @@
       <?php endif; ?>
     </ul>
     <div class="navbar-nav">
-        <a href="#" class="nav-item nav-link active">
+        <a href="<?= URLROOT ?>carts/cartItems" class="nav-item nav-link active">
             <h5 class="cart pr-5">
                 <i class="fas fa-shopping-cart"></i> Cart
-                <span id="cart_count" class="text-warning bg-light">0</span>
+                <span id="cart_count" class="text-warning bg-light"><?= isset($_SESSION['cart']) > 0 ? count($_SESSION['cart']) : 0 ?></span>
             </h5>
         </a>
     </div>
