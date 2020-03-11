@@ -23,6 +23,7 @@ class Carts extends Controller
                 unset($_SESSION['cart'][$key]);
             }
         }
+        flash('item_remove', 'Remove Item success!');
         redirect('carts/cartItems');
     }
     public function addItemTocart($id){
@@ -38,6 +39,14 @@ class Carts extends Controller
             }
         }else{
             $_SESSION['cart'][0] = $id;
+        }
+    }
+    public function account(){
+        if(!isLogin()){
+            flash("no_login", "You Should Login First!", "alert alert-danger");
+            redirect('users/login');
+        }else{
+            $this->view('cart/account');
         }
     }
 }

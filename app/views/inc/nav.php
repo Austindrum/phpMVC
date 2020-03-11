@@ -30,6 +30,9 @@
       <?php endif; ?>
     </ul>
     <div class="navbar-nav">
+        <?php if(isset($_SESSION['user_id'])): ?>
+          <li class="nav-item text-light mr-4 mt-2 "><h5>Welcome <?= $_SESSION['user_name'] ?></h5></li>
+        <?php endif; ?>
         <a href="<?= URLROOT ?>carts/cartItems" class="nav-item nav-link active">
             <h5 class="cart pr-5">
                 <i class="fas fa-shopping-cart"></i> Cart

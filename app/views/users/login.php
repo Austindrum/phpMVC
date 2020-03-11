@@ -3,6 +3,7 @@
     <div class="col-md-5 mx-auto p-4 rounded" id="user-form">
         <?php flash("register_success"); ?>
         <?php flash("logout_success"); ?>
+        <?php flash("no_login"); ?>
         <form class="form-signin" action="<?= URLROOT ?>users/login" method="POST">
             <div class="text-center mb-4">
                 <h1 class="h3 mb-3 font-weight-bolder">
