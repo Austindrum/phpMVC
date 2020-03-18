@@ -1,9 +1,10 @@
 <?php require_once APPROOT.'/views/inc/header.php' ?>
 <?php flash('item_remove'); ?>
+<?php flash('empty_cart'); ?>
 <div class="row">
     <div class="col-md-8">
         <?php foreach($data as $item): ?>
-            <div class="item">
+            <div class="item" data-id="<?= $item->id ?>">
                 <form action="<?= URLROOT ?>carts/dellCart/<?= $item->id ?>" method="POST" class="mb-3">
                     <div class="border rounded">
                         <div class="row bg-white">
@@ -40,6 +41,9 @@
             <h6>Price Details</h6>
             <hr>
             <form action="<?= URLROOT ?>carts/account" method="POST">
+            <?php foreach($data as $item){ ?>
+                  <input type="hidden" name="<?= $item->id ?>" data-id="<?= $item->id ?>" value="1" class="itemSelect">  
+            <?php } ?>
             <div class="row">
                 <div class="col-md-6">
                     <h6>Price (<span class="text-danger"><?= count($data) ?></span> items)</h6>

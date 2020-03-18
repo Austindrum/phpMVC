@@ -56,7 +56,13 @@ class Database
         $this->execute();
         return $this->stmt->fetch(PDO::FETCH_OBJ);
     }
+    public function getLastInsertId(){
+        return $this->dbh->lastInsertId();
+    }
     public function rowCount(){
         return $this->stmt->rowCount();
     }
+    // public function lastInertId(){
+    //     return mysqli_insert_id($this->dbh);
+    // }
 }

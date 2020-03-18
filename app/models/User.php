@@ -28,6 +28,10 @@ class User
         $this->db->bind(':name', $data['name']);
         $this->db->bind(':email', $data['email']);
         $this->db->bind(':password', $data['password']);
-        return $this->db->execute() ? true : false;
+        $result = [
+            'isSuccess'=>$this->db->execute() ? true : false,
+            'mailActiveCode'=>$this->db->getLastInsertId()
+        ];
+        return $result;
     }
 }

@@ -1,10 +1,36 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../vendor/autoload.php';
+
 class Users extends Controller
 {
     public function __construct(){
         $this->userModel = $this->model('User');
     }
+    public function index($id = []){
+        if(!isLogin()){
+            flash("no_login", "You Should Login First!", "alert alert-danger");
+            redirect('users/login');
+        }else{
+            $this->view('users/profile');   
+        }
+    }
+    // public function dashbord(){
+    //     if(!isLogin()){
+    //         flash("no_login", "You Should Login First!", "alert alert-danger");
+    //         redirect('users/login');
+    //     }else{
+    //         if($_SESSION['user_email'] !== 'austin@mail.com'){
+    //             flash("no_admin", "You are not Admin", "alert alert-danger");
+    //             redirect('users/profile');
+    //         }else{
+    //             $this->view('users/dashbord');
+    //         }
+    //     }
+    // }
     public function login(){
         if($_SERVER['REQUEST_METHOD'] == "POST"){
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -14,6 +40,7 @@ class Users extends Controller
                 'email_err'=>'',
                 'password_err'=>'',
             ];
+            if(isset($_POST['remember'])){ $data['remember'] = $_POST['remember']; };
             // Email Validate ===================================================
             if(empty($data['email'])){
                 $data['email_err'] = "Please Enter Your Email";
@@ -28,6 +55,11 @@ class Users extends Controller
             if(empty($data['email_err']) && empty($data['password_err'])){
                 $user = $this->userModel->login($data['email'],$data['password']);
                 if($user){
+                    if(isset($data['remember'])){
+                        setcookie('member_user', $data['email'], time()+3600);
+                    }else{
+                        setcookie('member_user', "", time()-3600);
+                    }
                     flash("login_success", "Login Success");
                     $this->setLoginSession($user);
                     redirect('pages/index');
@@ -102,9 +134,19 @@ class Users extends Controller
             // User Info Validate Confirm===================================================
             if(empty($data['name_err']) && empty($data['email_err']) && empty($data['password_err']) && empty($data['email_err'])){
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-                if($this->userModel->register($data)){
-                    flash("register_success", "Rgister Success! You can login Now!");
+                $result = $this->userModel->register($data);                 
+                if($result['isSuccess']){
+                    // $actual_link = "http://localhost/phpMVC/users/active/" . $result['mailActiveCode'];
+                    // $toEmail = $data["email"];
+                    // $subject = "User Registration Activation Email";
+                    // $content = "Click this link to activate your account. <a href='" . $actual_link . "'>" . $actual_link . "</a>";
+                    // $mailHeaders = "From: Admin\r\n";
+                    // if(mail($toEmail, $subject, $content, $mailHeaders)) {
+                    flash("register_success", "Registered! The activation mail is sent to your email. Click to activate you account.");
                     redirect('users/login');
+                    // }else{
+                    //     die("Error Happend");
+                    // }   
                 }else{
                     die("Error Happend");
                 };

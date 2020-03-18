@@ -7,7 +7,6 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   <div class="collapse navbar-collapse" id="navbarsExample04">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
@@ -17,6 +16,15 @@
         <a class="nav-link" href="<?= URLROOT ?>pages/about">About</a>
       </li>
       <?php if(isset($_SESSION['user_id'])): ?>
+        <?php if($_SESSION['user_email'] == 'austin@mail.com'): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= URLROOT ?>carts/dashbord">Dashbord</a>
+          </li>
+        <?php else: ?>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= URLROOT ?>users/<?= $_SESSION['user_id'] ?>">Profollio</a>
+          </li>
+        <?php endif; ?>
       <li class="nav-item">
         <a class="nav-link" href="<?= URLROOT ?>users/logout">Logout</a>
       </li>

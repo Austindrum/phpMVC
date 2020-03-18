@@ -17,7 +17,12 @@
                 class="form-control <?= !empty($data['email_err']) ? 'is-invalid' : '' ?>" 
                 placeholder="Email address" 
                 name="email"
-                value="<?= $data['email'] ?>"
+                value="<?php 
+                            echo $data['email'];
+                            if(isset($_COOKIE['member_user'])){
+                                echo $_COOKIE['member_user'];
+                            } 
+                        ?>"
                 autocomplete="off">
                 <span class="invalid-feedback font-weight-bold"><?= '! '.$data['email_err'] ?></span>
             </div>
@@ -33,7 +38,7 @@
 
             <div class="checkbox mb-1 mt-3">
                 <label>
-                    <input type="checkbox" value="remember-me"> Remember me
+                    <input type="checkbox" name="remember" value="click" <?php if(isset($_COOKIE['member_user'])) echo "checked"; ?>> Remember me
                 </label>
             </div>
             <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Login</button>
